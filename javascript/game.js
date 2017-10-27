@@ -1,81 +1,71 @@
-var letters = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z'];
-var win = 0;
-var lose = 0;
-var guesses = 9;
+    var text = ["a", "b", "c", "d", "f", "g", "h", "i", "j", "k", "l", "m", "n", "o", "p", "q", "r", "s", "t", "u", "v", "w", "x", "y", "z"];
+  	var win = 0;
+  	var wrong = 0;
+  	var life = 9;
+  	var guessedletter = []
+  	var usersguess =""
+  	// var computerguess = text[Math.foor(Math.random()*text.length)];
 
-var userguess, correctedletter, computerguess;
+  	document.onkeyup = function(event){
+  		usersguess=event.key;
+   var computerguess = text[Math.floor(Math.random() * text.length)];
 
-// setup listen to key
-document.onkeyup = function(event) {
-  var guess = event.key;
+// Display
 
 
-//condition and setup function 
 
-  	if(userguess === computerguess)
+document.getElementById("guessedletter").innerHTML = "you guessed" + ":" + usersguess;
+        
+document.getElementById("life").innerHTML = "life" + " " + life;
+        
+document.getElementById("computerguess1").innerHTML = "I guessed: " + computerguess;
+
+console.log(computerguess)
+        
+  	if (usersguess === computerguess)
+
   	{
-  		win();
+  		win++;
+  		alert("you are corrected, the letter is" + " " + computerguess);
+  		guessedletter = [];
+  		computerguess = text[Math.floor(Math.random() * text.length)];
+        document.getElementById("win").innerHTML = "Score: " + " " +win ;
+        reset();
+
   	}
 
-  	else if(userguess - 1 === 0)
+  	else if (usersguess !== computerguess)
   	{
-  		lose();
+  		wrong++;
+  		life--;
+        console.log(life)
+        document.getElementById("lose").innerHTML = "lose" +" "+ wrong;
+        document.getElementById("guesswrong").innerHTML = "You Guess Wrong";
+        document.getElementById("life").innerHTML = "life" + " " + life;
+        
   	}
 
-  	else 
+    if (life === 0) 
   	{
-  		fail(guess);
+        reset();
+  		computerguess = text[Math.floor(Math.random() * text.length)];
+  		alert("You have lost" +"!!" + "Click OK to continue");
+
   	}
 
-  display ();
-  resetGame();
+  	if (life > 0)
+  	{
+  		guessedletter.push(usersguess);
+  	}
+        
+    
+  	}
+    
+    reset()
 
-
-  function display()
-
-  {
-  	var winP = document.getElementByid ("win");
-  	var loseP = document.getElementByid('loses')
-  	var guessleftP = document.getElementByid("guessleft")
-  	var letterguessed = document.getElementByid("guessed")
-
-  	winP.innerHTML = win;
-  	loseP.innterHTML = lose;
-  	guessleftP.innerHTML = userguess;
-  	letterguessed.innerHTML = guessedletter.join",";
-
-  }
-
-
-//define the situation for each function
-  function win()
-
-  {
-  	win++;
-  	win = 10;
-  	resetGame()
-  }
-
-  function lose()
-  {
-  	lose ++;
-  	lose = 10
-  	resetGame()
-  }
-
-  function fail()
-
-  {
-  	userguess--;
-  	guessedletter.push(letter);
-  }
-
-  function reset()
-  {
-  	usergess = 10;
-  	guessedletter =[];
-  	computerguess = letter[Math.floor(Math.random() * letter.length)];
-
-  }
-
+function reset() {
+        win = 0;
+  		wrong = 0;
+        life = 9;
+    
 }
